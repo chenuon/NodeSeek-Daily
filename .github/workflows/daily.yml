@@ -27,7 +27,9 @@ jobs:
           sudo apt-get install -y google-chrome-stable
 
       - name: Run NodeSeek Daily Script
-        run: python nodeseek_daily.py
         env:
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+          NS_COOKIE: ${{ secrets.NS_COOKIE }}
+          NS_RANDOM: ${{ secrets.NS_RANDOM }}
+          HEADLESS: "true"
+        run: python nodeseek_daily.py
+
