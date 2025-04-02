@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '01 16 * * *'  # UTC 16:00，即北京时间 00:01
+    - cron: '27 01 * * *'  # UTC 16:00，即北京时间 00:01
 
 jobs:
   run-nodeseek-daily:
