@@ -11,7 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 def get_chrome_version():
     try:
         result = subprocess.check_output(['google-chrome', '--version']).decode('utf-8')
-        version = result.split()[2]  # 提取版本号，如 "134.0.6998.0"
+        version = result.split()[2]  # 提取版本号，如 "134.0.6998.165"
         major_version = version.split('.')[0]  # 提取主版本号，如 "134"
         return major_version
     except Exception as e:
@@ -26,15 +26,20 @@ def setup_driver_and_cookies():
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
 
-    # 获取 Chrome 版本并设置 ChromeDriver 目标版本
+    # 获取 Chrome 版本
     chrome_version = get_chrome_version()
     if chrome_version:
         print(f"检测到 Chrome 版本: {chrome_version}")
-        uc.TARGET_VERSION = int(chrome_version)  # 设置匹配的 ChromeDriver 版本
+        # 强制指定 ChromeDriver 版本为 134
+        uc.TARGET_VERSION = int(chrome_version)  # 设置目标版本为 134
 
     try:
         print("正在启动Chrome...")
-        driver = uc.Chrome(options=options)
+        # 显式指定 ChromeDriver 版本为 134，并禁用自动下载
+        driver = uc.Chrome(
+            options=options,
+            version_main=134  # 强制使用 ChromeDriver 134
+        )
         driver.get('https://www.nodeseek.com/sign')
         cookies = [
             {'name': 'username', 'value': os.getenv('USERNAME')},
